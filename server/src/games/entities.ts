@@ -4,11 +4,14 @@ import User from '../users/entity'
 export type Symbol = 'x' | 'o'
 export type Row = [ Symbol | null, Symbol | null, Symbol | null ]
 export type Board = [ Row, Row, Row ]
+export type Body = [ Number, Number ] | [ null, null ]
+export type Snake = Body[]
 
 type Status = 'pending' | 'started' | 'finished'
 
 const emptyRow: Row = [null, null, null]
 const emptyBoard: Board = [ emptyRow, emptyRow, emptyRow ]
+const emptySnake: Snake = [ [null, null] ]
 
 @Entity()
 export class Game extends BaseEntity {
@@ -18,6 +21,9 @@ export class Game extends BaseEntity {
 
   @Column('json', {default: emptyBoard})
   board: Board
+
+  @Column('boolean', {default: false})
+  coin: boolean
 
   @Column('char', {length:1, default: 'x'})
   turn: Symbol
@@ -53,4 +59,7 @@ export class Player extends BaseEntity {
 
   @Column('char', {length: 1})
   symbol: Symbol
+
+  @Column('json', {default: emptySnake})
+  snake: Snake
 }
