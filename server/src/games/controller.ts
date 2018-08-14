@@ -1,12 +1,9 @@
-import { 
-  JsonController, Authorized, CurrentUser, Post, Param, BadRequestError, HttpCode, NotFoundError, ForbiddenError, Get, 
-  Body, Patch 
-} from 'routing-controllers'
+import { JsonController, Authorized, CurrentUser, Post, Param, BadRequestError, HttpCode, NotFoundError, ForbiddenError, Get, Body, Patch } from 'routing-controllers'
 import User from '../users/entity'
 import { Game, Player, Board } from './entities'
-import {IsBoard, isValidTransition, calculateWinner, finished} from './logic'
+import { IsBoard, isValidTransition, calculateWinner, finished } from './logic'
 import { Validate } from 'class-validator'
-import {io} from '../index'
+import { io } from '../index'
 
 class GameUpdate {
 
@@ -30,7 +27,8 @@ export default class GameController {
     await Player.create({
       game: entity, 
       user,
-      symbol: 'x'
+      symbol: 'x',
+      snake: [[1,1]]
     }).save()
 
     const game = await Game.findOneById(entity.id)
@@ -60,7 +58,8 @@ export default class GameController {
     const player = await Player.create({
       game, 
       user,
-      symbol: 'o'
+      symbol: 'o',
+      snake: [[3,3]]
     }).save()
 
     io.emit('action', {

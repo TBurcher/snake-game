@@ -1,16 +1,19 @@
 import { BaseEntity, PrimaryGeneratedColumn, Column, Entity, Index, OneToMany, ManyToOne } from 'typeorm'
 import User from '../users/entity'
 
-export type Symbol = 'x' | 'o'
-export type Row = [ Symbol | null, Symbol | null, Symbol | null ]
-export type Board = [ Row, Row, Row ]
+export type Symbol = 'x' | 'o' | '$'
+export type Row = [ Symbol | null, Symbol | null, Symbol | null, Symbol | null, Symbol | null ]
+export type Board = [ Row, Row, Row, Row, Row ]
 export type Body = [ Number, Number ] | [ null, null ]
 export type Snake = Body[]
 
 type Status = 'pending' | 'started' | 'finished'
 
-const emptyRow: Row = [null, null, null]
-const emptyBoard: Board = [ emptyRow, emptyRow, emptyRow ]
+const emptyRow: Row = [null, null, null, null, null]
+const coinRow: Row = [null, null, '$', null, null]
+const player1Row: Row = [null, 'x', null, null, null]
+const player2Row: Row = [null, null, null, 'o', null]
+const emptyBoard: Board = [ emptyRow, player1Row, coinRow, player2Row, emptyRow ]
 const emptySnake: Snake = [ [null, null] ]
 
 @Entity()
@@ -22,8 +25,8 @@ export class Game extends BaseEntity {
   @Column('json', {default: emptyBoard})
   board: Board
 
-  @Column('boolean', {default: false})
-  coin: boolean
+  @Column('json', {default: [2,2]})
+  coin: Body
 
   @Column('char', {length:1, default: 'x'})
   turn: Symbol
