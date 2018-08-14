@@ -20,69 +20,31 @@ class GameDetails extends PureComponent {
 
   joinGame = () => this.props.joinGame(this.props.game.id)
 
-  // makeMove = (toRow, toCell) => {
-  //   const {game, updateGame} = this.props
-
-  //   const board = game.board.map(
-  //     (row, rowIndex) => row.map((cell, cellIndex) => {
-  //       if (rowIndex === toRow && cellIndex === toCell) return game.turn
-  //       else return cell
-  //     })
-  //   )
-  //   updateGame(game.id, board)
-  // }
-
-
   makeMove = (toRow, toCell) => {
     const snake = [[2, 2]]
-    snake.unshift([toRow,toCell])
+    snake.unshift([toRow, toCell])
     snake.pop()
     const { game, updateGame } = this.props
-    // let board = game.board.map(
-    //   (row, rowIndex) => row.map((cell, cellIndex) => {
-    //     if (rowIndex === toRow && cellIndex === toCell) {
-    //       snake.map((part) => {
-    //         if (rowIndex === part[0] && cellIndex === part[1]) {
-    //           console.log(game.turn)
-    //         }
-    //       })
-    //       return game.turn
-    //       // return null
-    //     }
-    //     else {
-    //       // return  snake.map((part) => {
-    //       //     if (rowIndex === part[0] && cellIndex === part[1]) {
-    //       //       console.log(game.turn)
-    //       //       return cell
-    //       //     } else {
-    //       return cell
-    //     }
-    //   })
-    // )
-
-
-   console.log(snake)
-
-  const board = game.board.map(
-    (row, rowIndex) => row.map((cell, cellIndex) => {
-     let rs = snake.map((part) => {
-        if (rowIndex === part[0] && cellIndex === part[1]) {
-          return game.turn
+    const board = game.board.map(
+      (row, rowIndex) => row.map((cell, cellIndex) => {
+        let rs = snake.map((part) => {
+          if (rowIndex === part[0] && cellIndex === part[1]) {
+            return game.turn
+          }
+          else {
+            return cell
+          }
         }
-        else {
-          return cell
-        }
+        )
+        return rs[0]
+
       }
-      ) 
-      return rs[0]
-
-    }
-    ))
+      ))
 
     updateGame(game.id, board)
     //update snake
   }
-  
+
 
 
   render() {
