@@ -25,12 +25,12 @@ export const isValidTransition = (playerSymbol: Symbol, from: Board, to: Board) 
     .reduce((a,b) => a.concat(b))
     .filter(change => change.from !== change.to)
 
-  return changes.length === 1 && 
+  return changes.length <= 2 && 
     changes[0].to === playerSymbol && 
     changes[0].from === null
 }
 
-export const calculateWinner = (board: Board): Symbol | null => null
+//export const calculateWinner = (board: Board): Symbol | null => null
 
 export const finished = (board: Board): boolean =>
   board
