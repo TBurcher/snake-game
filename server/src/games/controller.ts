@@ -1,6 +1,6 @@
 import { JsonController, Authorized, CurrentUser, Post, Param, BadRequestError, HttpCode, NotFoundError, ForbiddenError, Get, Body, Patch } from 'routing-controllers'
 import User from '../users/entity'
-import { Game, Player, Board } from './entities'
+import { Game, Player, Board, Snake } from './entities'
 import { IsBoard, isValidTransition, finished } from './logic'
 import { Validate } from 'class-validator'
 import { io } from '../index'
@@ -10,6 +10,7 @@ class GameUpdate {
     message: 'Not a valid board'
   })
   board: Board
+  snake: Snake
 }
 
 @JsonController()
@@ -24,10 +25,10 @@ export default class GameController {
     const entity = await Game.create().save()
 
     await Player.create({
-      game: entity, 
+      game: entity,
       user,
       symbol: 'x',
-      snake: [[1,1]]
+      snake: [[1, 1]]
     }).save()
 
     const game = await Game.findOneById(entity.id)
@@ -55,10 +56,10 @@ export default class GameController {
     await game.save()
 
     const player = await Player.create({
-      game, 
+      game,
       user,
       symbol: 'o',
-      snake: [[3,3]]
+      snake: [[3, 3]]
     }).save()
 
     io.emit('action', {
@@ -80,21 +81,25 @@ export default class GameController {
     if (!game) throw new NotFoundError(`Game does not exist`)
 
     const player = await Player.findOne({ user, game })
-
     if (!player) throw new ForbiddenError(`You are not part of this game`)
     if (game.status !== 'started') throw new BadRequestError(`The game is not started yet`)
     if (player.symbol !== game.turn) throw new BadRequestError(`It's not your turn`)
-    if (!isValidTransition(player.symbol, game.board, update.board)) throw new BadRequestError(`Invalid move`)
-    
+    if (!isValidTransition(game.board, update.board)) throw new BadRequestError(`Invalid move`)
+
     if (finished(update.board)) {
       game.status = 'finished'
     }
     else {
       game.turn = player.symbol === 'x' ? 'o' : 'x'
     }
+
+    const index = game.players.indexOf(game.players.filter(p => p.id === player.id)[0])
+    game.players[index].snake = update.snake
     game.board = update.board
+    player.snake = update.snake
     await game.save()
-    
+    await player.save()
+
     io.emit('action', {
       type: 'UPDATE_GAME',
       payload: game

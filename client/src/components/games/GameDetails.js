@@ -21,15 +21,25 @@ class GameDetails extends PureComponent {
   joinGame = () => this.props.joinGame(this.props.game.id)
 
   makeMove = (toRow, toCell) => {
-    const snake = [[2, 2]]
-    snake.unshift([toRow, toCell])
-    snake.pop()
+    const snake = this.props.game.players.filter(player => player.symbol === this.props.game.turn)[0].snake
+    const originalSnake = [...snake]
+    const snakeEnd = snake[snake.length - 1]
+    if (this.props.game.coin[0] === toRow && this.props.game.coin[1] === toCell) {
+      snake.unshift(this.props.game.coin)
+    }
+    else {
+      snake.unshift([toRow, toCell])
+      snake.pop()
+    }
     const { game, updateGame } = this.props
     const board = game.board.map(
       (row, rowIndex) => row.map((cell, cellIndex) => {
         let rs = snake.map((part) => {
           if (rowIndex === part[0] && cellIndex === part[1]) {
             return game.turn
+          }
+          else if (rowIndex === snakeEnd[0] && cellIndex === snakeEnd[1] && snake.length === originalSnake.length) {
+            return null
           }
           else {
             return cell
@@ -41,8 +51,7 @@ class GameDetails extends PureComponent {
       }
       ))
 
-    updateGame(game.id, board)
-    //update snake
+    updateGame(game.id, board, snake)
   }
 
 
