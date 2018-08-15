@@ -92,6 +92,7 @@ export default class GameController {
     else {
       game.turn = player.symbol === 'x' ? 'o' : 'x'
     }
+
     const index = game.players.indexOf(game.players.filter(p => p.id === player.id)[0])
     game.players[index].snake = update.snake
     game.board = update.board
