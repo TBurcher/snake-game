@@ -1,14 +1,14 @@
 import { ValidatorConstraint, ValidatorConstraintInterface } from 'class-validator'
-import { Board, Symbol, Row } from './entities'
+import { Board, Symbol, Row, defaultBoard, Body } from './entities'
 
 @ValidatorConstraint()
 export class IsBoard implements ValidatorConstraintInterface {
 
   validate(board: Board) {
-    const symbols = [ 'x', 'o', null ]
-    return board.length === 3 &&
+    const symbols = [ 'x', 'o', '$', null ]
+    return board.length === 5 &&
       board.every(row =>
-        row.length === 3 &&
+        row.length === 5 &&
         row.every(symbol => symbols.includes(symbol))
       )
   }
@@ -25,27 +25,25 @@ export const isValidTransition = (playerSymbol: Symbol, from: Board, to: Board) 
     .reduce((a,b) => a.concat(b))
     .filter(change => change.from !== change.to)
 
-  return changes.length === 1 && 
+  return changes.length <= 2 && 
     changes[0].to === playerSymbol && 
     changes[0].from === null
 }
 
-export const calculateWinner = (board: Board): Symbol | null =>
-  board
-    .concat(
-      // vertical winner
-      [0, 1, 2].map(n => board.map(row => row[n])) as Row[]
-    )
-    .concat(
-      [
-        // diagonal winner ltr
-        [0, 1, 2].map(n => board[n][n]),
-        // diagonal winner rtl
-        [0, 1, 2].map(n => board[2-n][n])
-      ] as Row[]
-    )
-    .filter(row => row[0] && row.every(symbol => symbol === row[0]))
-    .map(row => row[0])[0] || null
+export const randomLocation = () => {
+  const row: number = Math.floor(Math.random() * defaultBoard.length)
+  const column: number = Math.floor(Math.random() * defaultBoard[0].length)
+  const location: Body = [row, column]
+  return location
+}
+
+export const newCoin = (coin: Body | null ) => {
+  if (coin === null) { 
+    const newCoin = randomLocation()
+    return newCoin
+  }
+  else { return coin }
+}
 
 export const finished = (board: Board): boolean =>
   board
