@@ -1,9 +1,9 @@
-import React, {PureComponent} from 'react'
-import {connect} from 'react-redux'
-import {Redirect} from 'react-router-dom'
-import {getGames, joinGame, updateGame} from '../../actions/games'
-import {getUsers} from '../../actions/users'
-import {userId} from '../../jwt'
+import React, { PureComponent } from 'react'
+import { connect } from 'react-redux'
+import { Redirect } from 'react-router-dom'
+import { getGames, joinGame, updateGame } from '../../actions/games'
+import { getUsers } from '../../actions/users'
+import { userId } from '../../jwt'
 import Paper from 'material-ui/Paper'
 import Board from './Board'
 import './GameDetails.css'
@@ -14,29 +14,46 @@ class GameDetails extends PureComponent {
     if (this.props.authenticated) {
       if (this.props.game === null) this.props.getGames()
       if (this.props.users === null) this.props.getUsers()
+
     }
   }
 
   joinGame = () => this.props.joinGame(this.props.game.id)
 
   makeMove = (toRow, toCell) => {
-    const {game, updateGame} = this.props
-
+    const snake = [[2, 2]]
+    snake.unshift([toRow, toCell])
+    snake.pop()
+    const { game, updateGame } = this.props
     const board = game.board.map(
       (row, rowIndex) => row.map((cell, cellIndex) => {
-        if (rowIndex === toRow && cellIndex === toCell) return game.turn
-        else return cell
-      })
-    )
+        let rs = snake.map((part) => {
+          if (rowIndex === part[0] && cellIndex === part[1]) {
+            return game.turn
+          }
+          else {
+            return cell
+          }
+        }
+        )
+        return rs[0]
+
+      }
+      ))
+
     updateGame(game.id, board)
+    //update snake
   }
 
 
 
   render() {
-    const {game, users, authenticated, userId} = this.props
 
-    if (!authenticated) return <Redirect to="/login" />
+    const { game, users, authenticated, userId } = this.props
+    if (!authenticated) return (
+      <Redirect to="/login" />
+    )
+
     if (game === null || users === null) return 'Loading...'
     if (!game) return 'Not found'
 
