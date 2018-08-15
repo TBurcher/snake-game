@@ -1,5 +1,5 @@
 import { ValidatorConstraint, ValidatorConstraintInterface } from 'class-validator'
-import { Board, Symbol, Row, defaultBoard, Body } from './entities'
+import { Board, Symbol, Row, defaultBoard, Body, Snake } from './entities'
 
 @ValidatorConstraint()
 export class IsBoard implements ValidatorConstraintInterface {
@@ -26,8 +26,7 @@ export const isValidTransition = (playerSymbol: Symbol, from: Board, to: Board) 
     .filter(change => change.from !== change.to)
 
   return changes.length <= 2 && 
-    changes[0].to === playerSymbol && 
-    changes[0].from === null
+    changes[0].to === playerSymbol
 }
 
 export const randomLocation = () => {
@@ -37,10 +36,19 @@ export const randomLocation = () => {
   return location
 }
 
-export const newCoin = (coin: Body | null ) => {
-  if (coin === null) { 
-    const newCoin = randomLocation()
-    return newCoin
+export const newCoin = (coin: Body | null, player1Snake: Snake, player2Snake: Snake) => {
+  if (coin === null) {
+    const snakeLocations = player1Snake.concat(player2Snake)
+    const coinCheck = () => {
+      let newCoin = randomLocation()
+      return snakeLocations.map(location => {
+        if (newCoin === location) { 
+          coinCheck()
+        }
+        else { return newCoin }
+      })
+    }
+    return coinCheck()
   }
   else { return coin }
 }
