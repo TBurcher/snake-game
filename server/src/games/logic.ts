@@ -1,5 +1,5 @@
 import { ValidatorConstraint, ValidatorConstraintInterface } from 'class-validator'
-import { Board, Symbol, Row } from './entities'
+import { Board, Symbol, Row, defaultBoard, Body } from './entities'
 
 @ValidatorConstraint()
 export class IsBoard implements ValidatorConstraintInterface {
@@ -30,7 +30,20 @@ export const isValidTransition = (playerSymbol: Symbol, from: Board, to: Board) 
     changes[0].from === null
 }
 
-//export const calculateWinner = (board: Board): Symbol | null => null
+export const randomLocation = () => {
+  const row: number = Math.floor(Math.random() * defaultBoard.length)
+  const column: number = Math.floor(Math.random() * defaultBoard[0].length)
+  const location: Body = [row, column]
+  return location
+}
+
+export const newCoin = (coin: Body | null ) => {
+  if (coin === null) { 
+    const newCoin = randomLocation()
+    return newCoin
+  }
+  else { return coin }
+}
 
 export const finished = (board: Board): boolean =>
   board

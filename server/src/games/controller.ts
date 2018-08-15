@@ -6,7 +6,6 @@ import { Validate } from 'class-validator'
 import { io } from '../index'
 
 class GameUpdate {
-
   @Validate(IsBoard, {
     message: 'Not a valid board'
   })
@@ -71,9 +70,6 @@ export default class GameController {
   }
 
   @Authorized()
-  // the reason that we're using patch here is because this request is not idempotent
-  // http://restcookbook.com/HTTP%20Methods/idempotency/
-  // try to fire the same requests twice, see what happens
   @Patch('/games/:id([0-9]+)')
   async updateGame(
     @CurrentUser() user: User,
@@ -88,16 +84,9 @@ export default class GameController {
     if (!player) throw new ForbiddenError(`You are not part of this game`)
     if (game.status !== 'started') throw new BadRequestError(`The game is not started yet`)
     if (player.symbol !== game.turn) throw new BadRequestError(`It's not your turn`)
-    if (!isValidTransition(player.symbol, game.board, update.board)) {
-      throw new BadRequestError(`Invalid move`)
-    }    
-
-    // const winner = calculateWinner(update.board)
-    // if (winner) {
-    //   game.winner = winner
-    //   game.status = 'finished'
-    // }
-    else if (finished(update.board)) {
+    if (!isValidTransition(player.symbol, game.board, update.board)) throw new BadRequestError(`Invalid move`)
+    
+    if (finished(update.board)) {
       game.status = 'finished'
     }
     else {
@@ -128,4 +117,3 @@ export default class GameController {
     return Game.find()
   }
 }
-
