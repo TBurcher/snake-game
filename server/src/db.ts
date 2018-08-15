@@ -30,7 +30,7 @@ export default () =>
       Game
     ],
     synchronize: true, // careful with this in production!
-    logging: true,
+    logging: false,
     namingStrategy: new CustomNamingStrategy()
   })
     .then(_ => console.log('Connected to Postgres with TypeORM'))
