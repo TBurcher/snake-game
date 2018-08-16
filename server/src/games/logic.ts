@@ -18,7 +18,7 @@ export const isValidTransition = (from: Board, to: Board) => {
   const changes = from
     .map(
       (row, rowIndex) => row.map((symbol, columnIndex) => ({
-        from: symbol, 
+        from: symbol,
         to: to[rowIndex][columnIndex]
       }))
     )
@@ -36,20 +36,17 @@ export const randomLocation = () => {
 }
 
 export const newCoin = (player1Snake: Snake, player2Snake: Snake) => {
-    const snakeLocations = player1Snake.concat(player2Snake)
-    console.log(snakeLocations)
-    const coinCheck = () => {
-      let newCoin = randomLocation()
-      return snakeLocations.map(location => {
-        if (newCoin === location) { 
-          coinCheck()
-          return null
-        }
-        else { return newCoin }
-      })
+  const snakeLocations = player1Snake.concat(player2Snake)
+  const coinCheck = (): Location => {
+    let newCoin = randomLocation()
+    console.log(` if statement is ${snakeLocations.filter(location => newCoin[0] === location[0] && newCoin[1] === location[1])} length`)
+    if (snakeLocations.filter(location => newCoin[0] === location[0] && newCoin[1] === location[1]).length < 1) {
+      return newCoin
     }
-    return coinCheck()[0]
+    else { return coinCheck() }
   }
+  return coinCheck()
+}
 
 export const finished = (board: Board): boolean =>
   board

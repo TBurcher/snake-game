@@ -11,6 +11,7 @@ class GameUpdate {
   })
   board: Board
   snake: Snake
+  snake2: Snake
   coin: Location | null
 }
 
@@ -87,7 +88,8 @@ export default class GameController {
     if (player.symbol !== game.turn) throw new BadRequestError(`It's not your turn`)
     if (!isValidTransition(game.board, update.board)) throw new BadRequestError(`Invalid move`)
     if (update.coin === null) {
-      const coin = await newCoin(game.players[0].snake, game.players[1].snake)
+      const coin = newCoin(update.snake, update.snake2)
+      console.log(`new coin on the board is ${coin}`)
       game.coin = coin
     } 
 

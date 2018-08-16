@@ -10,29 +10,56 @@ import './GameDetails.css'
 
 class GameDetails extends PureComponent {
 
-  componentWillMount() {
-    if (this.props.authenticated) {
-      if (this.props.game === null) this.props.getGames()
-      if (this.props.users === null) this.props.getUsers()
 
-    }
-  }
-
-  joinGame = () => this.props.joinGame(this.props.game.id)
-
-  makeMove = (toRow, toCell) => {
-    const { game, updateGame, } = this.props
-    const snake = this.props.game.players.filter(player => player.symbol === this.props.game.turn)[0].snake
+  makeMove = event => {
+    const { game, updateGame } = this.props
+    const snake = game.players.filter(player => player.symbol === game.turn)[0].snake
+    const snake2 = game.players.filter(player => player.symbol !== game.turn)[0].snake
     const originalSnake = [...snake]
+    const snakeHead = snake[0]
     const snakeEnd = snake[snake.length - 1]
-    if (game.coin[0] === toRow && game.coin[1] === toCell) {
-      snake.unshift(this.props.game.coin)
+
+    if (event.key === 'ArrowUp') {
+      console.log('up')
+      snake.pop()
+      if (snakeHead[0] === 0) {
+        snake.unshift([4, snakeHead[1]])
+      } else {
+        snake.unshift([snakeHead[0] - 1, snakeHead[1]])
+      }
+    }
+    else if (event.key === 'ArrowDown') {
+      console.log('down')
+      snake.pop()
+      if(snakeHead[0] === 4){
+        snake.unshift([0, snakeHead[1]])
+      } else {
+      snake.unshift([snakeHead[0] + 1, snakeHead[1]])
+      }
+    }
+    else if (event.key === 'ArrowRight') {
+      console.log('right')
+      snake.pop()
+      if(snakeHead[1]===4){
+        snake.unshift([snakeHead[0], 0])
+      }
+      snake.unshift([snakeHead[0], snakeHead[1] + 1])
+    }
+    else if (event.key === 'ArrowLeft') {
+      console.log('left')
+      snake.pop()
+      if(snakeHead[1]===0){
+        snake.unshift([snakeHead[0], 4])
+      }
+      snake.unshift([snakeHead[0], snakeHead[1] - 1])
+    }
+
+    const coin = game.coin
+    if (coin[0] === snake[0][0] && coin[1] === snake[0][1]) {
+      snake.push(snakeEnd)
       game.coin = null
     }
-    else {
-      snake.unshift([toRow, toCell])
-      snake.pop()
-    }
+
     const board = game.board.map(
       (row, rowIndex) => row.map((cell, cellIndex) => {
         let rs = snake.map((part) => {
@@ -52,8 +79,23 @@ class GameDetails extends PureComponent {
       }
       ))
 
-    updateGame(game.id, board, snake, game.coin)
+    updateGame(game.id, board, snake, snake2, game.coin) 
   }
+
+  componentWillMount() {
+    if (this.props.authenticated) {
+      if (this.props.game === null) this.props.getGames()
+      if (this.props.users === null) this.props.getUsers()
+      document.body.addEventListener('keydown', this.makeMove)
+
+    }
+  }
+
+  componentWillUnmount() {
+    document.body.removeEventListener('keydown', this.makeMove)
+  }
+
+  joinGame = () => this.props.joinGame(this.props.game.id)
 
   render() {
 
@@ -97,7 +139,7 @@ class GameDetails extends PureComponent {
 
       {
         game.status !== 'pending' &&
-        <Board board={game.board} coin={game.coin} makeMove={this.makeMove} />
+        <Board board={game.board} coin={game.coin} />
       }
     </Paper>)
   }
