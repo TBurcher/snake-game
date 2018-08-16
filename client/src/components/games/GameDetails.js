@@ -31,27 +31,29 @@ class GameDetails extends PureComponent {
     else if (event.key === 'ArrowDown') {
       console.log('down')
       snake.pop()
-      if(snakeHead[0] === 4){
+      if (snakeHead[0] === 4) {
         snake.unshift([0, snakeHead[1]])
       } else {
-      snake.unshift([snakeHead[0] + 1, snakeHead[1]])
+        snake.unshift([snakeHead[0] + 1, snakeHead[1]])
       }
     }
     else if (event.key === 'ArrowRight') {
       console.log('right')
       snake.pop()
-      if(snakeHead[1]===4){
+      if (snakeHead[1] === 4) {
         snake.unshift([snakeHead[0], 0])
+      } else {
+        snake.unshift([snakeHead[0], snakeHead[1] + 1])
       }
-      snake.unshift([snakeHead[0], snakeHead[1] + 1])
     }
     else if (event.key === 'ArrowLeft') {
       console.log('left')
       snake.pop()
-      if(snakeHead[1]===0){
+      if (snakeHead[1] === 0) {
         snake.unshift([snakeHead[0], 4])
+      } else {
+        snake.unshift([snakeHead[0], snakeHead[1] - 1])
       }
-      snake.unshift([snakeHead[0], snakeHead[1] - 1])
     }
 
     const coin = game.coin
