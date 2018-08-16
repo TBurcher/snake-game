@@ -4,3 +4,7 @@
   padding: 20px;
   width: 60%;
 }
+.board {
+  display: flex;
+  justify-content: center;
+}
