@@ -116,32 +116,31 @@ class GameDetails extends PureComponent {
       .map(p => p.userId)[0]
 
     return (<Paper className="outer-paper">
-      <h1>Game #{game.id}</h1>
-
+      <h2>Game #{game.id}</h2>
       <p>Status: {game.status}</p>
-
       {
         game.status === 'started' &&
         player && player.symbol === game.turn &&
         <div>It's your turn!</div>
       }
-
+      {
+        player &&
+        <div>You are {player.symbol}</div>
+      }
       {
         game.status === 'pending' &&
         game.players.map(p => p.userId).indexOf(userId) === -1 &&
         <button onClick={this.joinGame}>Join Game</button>
       }
-
       {
         winner &&
-        <p>Winner: {users[winner].email}</p>
+        <p>{game.winner} won the game</p>
       }
-
       <hr />
 
       {
         game.status !== 'pending' &&
-        <Board board={game.board} coin={game.coin} />
+        <Board className='board' board={game.board} coin={game.coin} />
       }
     </Paper>)
   }
