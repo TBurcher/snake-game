@@ -33,7 +33,6 @@ class GameDetails extends PureComponent {
       snake.unshift([toRow, toCell])
       snake.pop()
     }
-    console.log(snake.length, "and", originalSnake.length)
     const board = game.board.map(
       (row, rowIndex) => row.map((cell, cellIndex) => {
         let rs = snake.map((part) => {

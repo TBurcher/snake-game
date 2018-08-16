@@ -37,6 +37,7 @@ export const randomLocation = () => {
 
 export const newCoin = (player1Snake: Snake, player2Snake: Snake) => {
     const snakeLocations = player1Snake.concat(player2Snake)
+    console.log(snakeLocations)
     const coinCheck = () => {
       let newCoin = randomLocation()
       return snakeLocations.map(location => {
