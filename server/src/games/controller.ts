@@ -1,7 +1,7 @@
 import { JsonController, Authorized, CurrentUser, Post, Param, BadRequestError, HttpCode, NotFoundError, ForbiddenError, Get, Body, Patch } from 'routing-controllers'
 import User from '../users/entity'
 import { Game, Player, Board, Snake, Location } from './entities'
-import { IsBoard, isValidTransition, finished, newCoin } from './logic'
+import { IsBoard, isValidTransition, finished, newCoin, calculateWinner } from './logic'
 import { Validate } from 'class-validator'
 import { io } from '../index'
 
@@ -89,11 +89,15 @@ export default class GameController {
     if (!isValidTransition(game.board, update.board)) throw new BadRequestError(`Invalid move`)
     if (update.coin === null) {
       const coin = newCoin(update.snake, update.snake2)
-      console.log(`new coin on the board is ${coin}`)
       game.coin = coin
     } 
 
-    if (finished(update.board)) {
+    const winner = calculateWinner(update.snake, update.snake2)
+    if (winner) {
+      game.winner = player.symbol === 'x' ? 'o' : 'x'
+      game.status = 'finished'
+    }
+    else if (finished(update.board)) {
       game.status = 'finished'
     }
     else {

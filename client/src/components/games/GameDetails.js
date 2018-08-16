@@ -134,7 +134,7 @@ class GameDetails extends PureComponent {
 
       {
         winner &&
-        <p>Winner: {users[winner].firstName}</p>
+        <p>Winner: {users[winner].email}</p>
       }
 
       <hr />
