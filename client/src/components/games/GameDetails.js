@@ -66,6 +66,7 @@ class GameDetails extends PureComponent {
       const coin = game.coin
       if (coin[0] === snake[0][0] && coin[1] === snake[0][1]) {
         snake.push(snakeEnd)
+        game.coin = null
       }
 
       const board = game.board.map(
@@ -150,7 +151,9 @@ class GameDetails extends PureComponent {
 
       {
         game.status !== 'pending' &&
-        <Board className='board' board={game.board} coin={game.coin} />
+        <Board className='board' board={game.board} coin={game.coin} 
+        cobraHead={game.players.filter(player => player.symbol === 'x')[0].snake[0]} 
+        snakeHead={game.players.filter(player => player.symbol === 'o')[0].snake[0]} />
       }
     </Paper>)
   }
