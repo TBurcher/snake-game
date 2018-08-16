@@ -13,7 +13,8 @@ class GameDetails extends PureComponent {
 
   makeMove = event => {
     const { game, updateGame } = this.props
-    let snake = game.players.filter(player => player.symbol === game.turn)[0].snake
+    const snake = game.players.filter(player => player.symbol === game.turn)[0].snake
+    const snake2 = game.players.filter(player => player.symbol !== game.turn)[0].snake
     const originalSnake = [...snake]
     const snakeHead = snake[0]
     const snakeEnd = snake[snake.length - 1]
@@ -64,6 +65,7 @@ class GameDetails extends PureComponent {
       const coin = game.coin
       if (coin[0] === snake[0][0] && coin[1] === snake[0][1]) {
         snake.push(snakeEnd)
+        game.coin = null
       }
 
       const board = game.board.map(
@@ -85,7 +87,7 @@ class GameDetails extends PureComponent {
         }
         ))
 
-      updateGame(game.id, board, snake)
+        updateGame(game.id, board, snake, snake2, game.coin) 
     }
     else {
       console.log('invalid movement')
@@ -106,7 +108,6 @@ class GameDetails extends PureComponent {
   }
 
   joinGame = () => this.props.joinGame(this.props.game.id)
-
 
   render() {
 
@@ -143,14 +144,14 @@ class GameDetails extends PureComponent {
 
       {
         winner &&
-        <p>Winner: {users[winner].firstName}</p>
+        <p>Winner: {users[winner].email}</p>
       }
 
       <hr />
 
       {
         game.status !== 'pending' &&
-        <Board board={game.board} />
+        <Board board={game.board} coin={game.coin} />
       }
     </Paper>)
   }

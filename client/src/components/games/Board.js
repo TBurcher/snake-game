@@ -7,12 +7,17 @@ const renderCel = (rowIndex, cellIndex, symbol, hasTurn) => {
       className="board-tile"
       disabled={hasTurn}
       key={`${rowIndex}-${cellIndex}`}
-    >{symbol || '-'}</button>
+    >{symbol || '.' }</button>
   )
 }
 
-export default ({ board }) => board.map((cells, rowIndex) =>
+export default ({board, coin}) => board.map((cells, rowIndex) =>
   <div key={rowIndex}>
-    {cells.map((symbol, cellIndex) => renderCel( rowIndex, cellIndex, symbol, false))}
+    {cells.map((symbol, cellIndex) => {
+      if (rowIndex === coin[0] && cellIndex === coin[1]) {
+        return renderCel(rowIndex, cellIndex, '$', false)
+      } 
+      else { return renderCel(rowIndex, cellIndex, symbol, false) }
+    })}
   </div>
 )
