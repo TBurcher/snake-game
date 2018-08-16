@@ -12,14 +12,15 @@ class GameDetails extends PureComponent {
 
 
   makeMove = event => {
-    const { game, updateGame } = this.props
+    const { game, updateGame, userId } = this.props
     const snake = game.players.filter(player => player.symbol === game.turn)[0].snake
     const snake2 = game.players.filter(player => player.symbol !== game.turn)[0].snake
     const originalSnake = [...snake]
     const snakeHead = snake[0]
     const snakeEnd = snake[snake.length - 1]
+    const player = game.players.find(p => p.userId === userId)
 
-    if (['ArrowUp', 'ArrowDown', 'ArrowRight', 'ArrowLeft'].includes(event.key)) {
+    if (player.symbol === game.turn && ['ArrowUp', 'ArrowDown', 'ArrowRight', 'ArrowLeft'].includes(event.key)) {
 
       if (event.key === 'ArrowUp') {
         console.log('up')
@@ -87,7 +88,7 @@ class GameDetails extends PureComponent {
         }
         ))
 
-        updateGame(game.id, board, snake, snake2, game.coin) 
+      updateGame(game.id, board, snake, snake2, game.coin)
     }
     else {
       console.log('invalid movement')
@@ -126,32 +127,33 @@ class GameDetails extends PureComponent {
       .map(p => p.userId)[0]
 
     return (<Paper className="outer-paper">
-      <h1>Game #{game.id}</h1>
-
+      <h2>Game #{game.id}</h2>
       <p>Status: {game.status}</p>
-
       {
         game.status === 'started' &&
         player && player.symbol === game.turn &&
         <div>It's your turn!</div>
       }
-
+      {
+        player &&
+        <div>You are {player.symbol}</div>
+      }
       {
         game.status === 'pending' &&
         game.players.map(p => p.userId).indexOf(userId) === -1 &&
         <button onClick={this.joinGame}>Join Game</button>
       }
-
       {
         winner &&
-        <p>Winner: {users[winner].email}</p>
+        <p>{game.winner} won the game</p>
       }
-
       <hr />
 
       {
         game.status !== 'pending' &&
-        <Board board={game.board} coin={game.coin} />
+        <Board className='board' board={game.board} coin={game.coin} 
+        cobraHead={game.players.filter(player => player.symbol === 'x')[0].snake[0]} 
+        snakeHead={game.players.filter(player => player.symbol === 'o')[0].snake[0]} />
       }
     </Paper>)
   }

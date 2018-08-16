@@ -7,6 +7,8 @@ import { withRouter } from 'react-router'
 import { userId } from '../../jwt'
 import { connect } from 'react-redux'
 import AccountIcon from 'material-ui-icons/AccountBox'
+import cobra from '../icons/cobra.svg'
+import snake from '../icons/snake.svg'
 
 const TopBar = (props) => {
   const { location, history, user } = props
@@ -15,7 +17,7 @@ const TopBar = (props) => {
     <AppBar position="absolute" style={{zIndex:10}}>
       <Toolbar>
         <Typography variant="title" color="inherit" style={{flex: 1}}>
-          Multiplayer Tic Tac Toe
+        <img src={cobra} height='5%' width='5%' alt="snake" /> Multiplayer Snake <img src={snake} height='5%' width='5%' alt="snake" />
         </Typography>
         {
           user &&
