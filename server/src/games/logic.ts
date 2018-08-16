@@ -48,9 +48,7 @@ export const newCoin = (player1Snake: Snake, player2Snake: Snake) => {
 export const calculateWinner = (player1Snake: Snake, player2Snake: Snake) => {
   const snakeHead = player1Snake[0]
   const snakeLocations = player1Snake.concat(player2Snake)
-  console.log(`this is my head ${snakeHead} and this is all snake parts ${snakeLocations}`)
   if (snakeLocations.filter(location => snakeHead[0] === location[0] && snakeHead[1] === location[1]).length > 1) {
-    console.log(`looking at ${snakeLocations.filter(location => snakeHead[0] === location[0] && snakeHead[1] === location[1])}s length`)
     return true
   }
   else return false
