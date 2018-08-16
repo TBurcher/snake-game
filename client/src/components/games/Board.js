@@ -14,7 +14,7 @@ const renderCel = (rowIndex, cellIndex, symbol, hasTurn) => {
 }
 
 export default ({ board, coin }) => board.map((cells, rowIndex) =>
-  <div key={rowIndex} className='board' style={{backgroundColor: "green"}}>
+  <div key={rowIndex} className='board'>
     {cells.map((symbol, cellIndex) => {
       if (rowIndex === coin[0] && cellIndex === coin[1]) {
         return renderCel(rowIndex, cellIndex, <img src={mouse} alt="mouse" />, false)

@@ -1,5 +1,7 @@
 .board-tile {
-  margin: 5px;
-  height: 80px;
-  width: 80px;
+  height: 50px;
+  width: 50px;
+  background-color: transparent;
+  border:0px;
 }
+
