@@ -4,8 +4,8 @@ import User from '../users/entity'
 export type Symbol = 'x' | 'o' | '$'
 export type Row = [ Symbol | null, Symbol | null, Symbol | null, Symbol | null, Symbol | null ]
 export type Board = [ Row, Row, Row, Row, Row ]
-export type Body = [ number, number ] | [ null, null ]
-export type Snake = Body[]
+export type Location = [ number, number ] | [ null, null ]
+export type Snake = Location[]
 
 type Status = 'pending' | 'started' | 'finished'
 
@@ -26,7 +26,7 @@ export class Game extends BaseEntity {
   board: Board
 
   @Column('json', {default: [2,2]})
-  coin: Body | null
+  coin: Location | null
 
   @Column('char', {length:1, default: 'x'})
   turn: Symbol
