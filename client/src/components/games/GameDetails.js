@@ -148,6 +148,15 @@ class GameDetails extends PureComponent {
           <div className="current-turn">It's your turn!</div>
         }
 
+                {
+          winner &&
+          <div className="game-winner"><img src={winnerIcon()} alt="winner icon" /> Winner</div>
+        }
+        {
+          player &&
+          <div className="current-player"><img src={playerIcon()} alt="player icon" /> Player</div>
+        }
+
         {
           player &&
           <div className="current-player"><img src={playerIcon()} alt="player icon" /> Player</div>
