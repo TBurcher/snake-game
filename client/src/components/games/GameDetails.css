@@ -3,6 +3,7 @@
   margin: auto;
   padding: 20px;
   width: 60%;
+  background-color: #c4c7c8;
 }
 
 .game-header {
@@ -22,6 +23,7 @@
   background-size: cover;
   background-position: center; 
   background-blend-mode: luminosity;
+  padding: 15% 0;
 }
 
 body{
