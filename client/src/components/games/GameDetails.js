@@ -124,12 +124,8 @@ class GameDetails extends PureComponent {
       if (player.symbol === 'x') { return cobra }
       else { return snake }
     }
-
-    const winner = game.players
-      .filter(p => p.symbol === game.winner)
-      .map(p => p.userId)[0]
-    const winnerIcon = () => {
-      if (game.winner === 'x') { return cobra }
+    const otherIcon = () => {
+      if (player.symbol !== 'x') { return cobra }
       else { return snake }
     }
 
@@ -141,21 +137,20 @@ class GameDetails extends PureComponent {
           <button onClick={this.joinGame}>Join Game</button>
         }
         {
+          player &&
+          <div className="current-player"><img src={playerIcon()} alt="player icon" />{Object.values(users).filter(u => u.id === player.userId)[0].username}</div>
+        }
+        {
+          game.players.length > 1 &&
+          <div className="other-player"><img src={otherIcon()} alt="player icon" />{Object.values(users).filter(u => u.id !== player.userId)[0].username}</div>
+        }
+      </div>
+      <div className='whole-board'>
+        {
           game.status === 'started' &&
           player && player.symbol === game.turn &&
           <div className="current-turn">It's your turn!</div>
         }
-        {
-          winner &&
-          <div className="game-winner"><img src={winnerIcon()} alt="winner icon" /> Winner</div>
-        }
-        {
-          player &&
-          <div className="current-player"><img src={playerIcon()} alt="player icon" /> Player</div>
-        }
-      </div>
-      <hr />
-      <div className='whole-board'>
         {
           game.status !== 'pending' &&
           <Board board={game.board} coin={game.coin}
