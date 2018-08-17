@@ -14,7 +14,7 @@ const TopBar = (props) => {
   const { location, history, user } = props
 
   return (
-    <AppBar position="absolute" style={{zIndex:10}}>
+    <AppBar position="absolute" color="default" style={{zIndex:10}}>
       <Toolbar>
         <Typography variant="title" color="inherit" style={{flex: 1}}>
         <img src={cobra} height='5%' width='5%' alt="snake" /> Multiplayer Snake <img src={snake} height='5%' width='5%' alt="snake" />
