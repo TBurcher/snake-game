@@ -33,8 +33,6 @@ class GameDetails extends PureComponent {
     if (player.symbol === game.turn && ['ArrowUp', 'ArrowDown', 'ArrowRight', 'ArrowLeft'].includes(event.key)) {
 
       if (event.key === 'ArrowUp') {
-        console.log('up')
-
         snake.pop()
         if (snakeHead[0] === 0) {
           snake.unshift([4, snakeHead[1]])
@@ -42,10 +40,7 @@ class GameDetails extends PureComponent {
           snake.unshift([snakeHead[0] - 1, snakeHead[1]])
         }
       }
-
-
       else if (event.key === 'ArrowDown') {
-        console.log('down')
         snake.pop()
         if (snakeHead[0] === 4) {
           snake.unshift([0, snakeHead[1]])
@@ -54,7 +49,6 @@ class GameDetails extends PureComponent {
         }
       }
       else if (event.key === 'ArrowRight') {
-        console.log('right')
         snake.pop()
         if (snakeHead[1] === 4) {
           snake.unshift([snakeHead[0], 0])
@@ -63,7 +57,6 @@ class GameDetails extends PureComponent {
         }
       }
       else if (event.key === 'ArrowLeft') {
-        console.log('left')
         snake.pop()
         if (snakeHead[1] === 0) {
           snake.unshift([snakeHead[0], 4])
@@ -71,7 +64,6 @@ class GameDetails extends PureComponent {
           snake.unshift([snakeHead[0], snakeHead[1] - 1])
         }
       }
-
 
       const coin = game.coin
       if (coin[0] === snake[0][0] && coin[1] === snake[0][1]) {
@@ -94,7 +86,6 @@ class GameDetails extends PureComponent {
           }
           )
           return rs[0]
-
         }
         ))
 
