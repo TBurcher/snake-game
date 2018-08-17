@@ -34,12 +34,12 @@ export default ({ board, coin, cobraBody, snakeBody }) => board.map((cells, rowI
           <svg height="50" width="50">
             <circle cx="25" cy="25" r="12" fill="#364963" />
           </svg>, false)
-      } else if (rowIndex === cobraBody[cobraBody.length - 2][0] && cellIndex === cobraBody[cobraBody.length - 2][1]) {
+      } else if (cobraBody.length > 1 && rowIndex === cobraBody[cobraBody.length - 2][0] && cellIndex === cobraBody[cobraBody.length - 2][1]) {
         return renderCel(rowIndex, cellIndex,
           <svg height="50" width="50">
             <circle cx="25" cy="25" r="16" fill="#ffd335" />
           </svg>, false)
-      } else if (rowIndex === snakeBody[snakeBody.length - 2][0] && cellIndex === snakeBody[snakeBody.length - 2][1]) {
+      } else if (snakeBody.length > 1 && rowIndex === snakeBody[snakeBody.length - 2][0] && cellIndex === snakeBody[snakeBody.length - 2][1]) {
         return renderCel(rowIndex, cellIndex,
           <svg height="50" width="50">
             <circle cx="25" cy="25" r="16" fill="#364963" />
