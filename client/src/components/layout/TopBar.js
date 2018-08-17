@@ -7,7 +7,7 @@ import { withRouter } from 'react-router'
 import { userId } from '../../jwt'
 import { connect } from 'react-redux'
 import AccountIcon from 'material-ui-icons/AccountBox'
-import logo from '../icons/vipers-logo.png'
+import logo from '../icons/logo.png'
 
 const TopBar = (props) => {
   const { location, history, user } = props
@@ -16,7 +16,7 @@ const TopBar = (props) => {
     <AppBar position="absolute" color="default" style={{zIndex:10}}>
       <Toolbar>
         <Typography variant="title" color="inherit" style={{flex: 1}}>
-        <img src={logo} height='12%' width='12%' alt="snake" />
+        <img src={logo} height='5%' width='5%' alt="snake" />
         </Typography>
         {
           user &&
