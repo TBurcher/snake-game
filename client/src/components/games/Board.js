@@ -24,50 +24,39 @@ export default ({ board, coin, cobraBody, snakeBody }) => board.map((cells, rowI
         return renderCel(rowIndex, cellIndex, <img src={cobra} alt="cobra" />, false)
       } else if (rowIndex === snakeBody[0][0] && cellIndex === snakeBody[0][1]) {
         return renderCel(rowIndex, cellIndex, <img src={snake} alt="snake" />, false)
-       
-      }
-
-      else if (rowIndex === cobraBody[cobraBody.length-1][0] && cellIndex === cobraBody[cobraBody.length-1][1]) {
+      } else if (rowIndex === cobraBody[cobraBody.length - 1][0] && cellIndex === cobraBody[cobraBody.length - 1][1]) {
         return renderCel(rowIndex, cellIndex,
           <svg height="50" width="50">
             <circle cx="25" cy="25" r="12" fill="#ffd335" />
           </svg>, false)
-      } else if (rowIndex === snakeBody[snakeBody.length-1][0] && cellIndex === snakeBody[snakeBody.length-1][1]) {
+      } else if (rowIndex === snakeBody[snakeBody.length - 1][0] && cellIndex === snakeBody[snakeBody.length - 1][1]) {
         return renderCel(rowIndex, cellIndex,
           <svg height="50" width="50">
             <circle cx="25" cy="25" r="12" fill="#364963" />
           </svg>, false)
-      }
-
-
-      else if (rowIndex === cobraBody[cobraBody.length-2][0] && cellIndex === cobraBody[cobraBody.length-2][1]) {
+      } else if (rowIndex === cobraBody[cobraBody.length - 2][0] && cellIndex === cobraBody[cobraBody.length - 2][1]) {
         return renderCel(rowIndex, cellIndex,
           <svg height="50" width="50">
             <circle cx="25" cy="25" r="16" fill="#ffd335" />
           </svg>, false)
-      } else if (rowIndex === snakeBody[snakeBody.length-2][0] && cellIndex === snakeBody[snakeBody.length-2][1]) {
+      } else if (rowIndex === snakeBody[snakeBody.length - 2][0] && cellIndex === snakeBody[snakeBody.length - 2][1]) {
         return renderCel(rowIndex, cellIndex,
           <svg height="50" width="50">
             <circle cx="25" cy="25" r="16" fill="#364963" />
           </svg>, false)
-      }
-
-
-      else if (symbol === 'x') {
+      } else if (symbol === 'x') {
         return renderCel(rowIndex, cellIndex,
           <svg height="50" width="50">
             <circle cx="25" cy="25" r="20" fill="#ffd335" />
           </svg>
           , false)
-      }
-      else if (symbol === 'o') {
+      } else if (symbol === 'o') {
         return renderCel(rowIndex, cellIndex,
           <svg height="50" width="50">
             <circle cx="25" cy="25" r="20" fill="#364963" />
           </svg>
           , false)
-      }
-      else {
+      } else {
         return renderCel(rowIndex, cellIndex, symbol, false)
       }
     })}
