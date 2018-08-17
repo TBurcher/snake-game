@@ -20,7 +20,7 @@ const TopBar = (props) => {
         </Typography>
         {
           user &&
-          <Button color="inherit"><AccountIcon /> { user.email }</Button>
+          <Button color="inherit"><AccountIcon /> { user.username }</Button>
         }
         {
           location.pathname.indexOf('signup') > 0 &&
