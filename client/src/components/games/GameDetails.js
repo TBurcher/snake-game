@@ -8,10 +8,18 @@ import Paper from 'material-ui/Paper'
 import Board from './Board'
 import cobra from '../icons/cobra.svg'
 import snake from '../icons/snake.svg'
+import drums from '../audio/jumanji.mp3'
 import './GameDetails.css'
 
 class GameDetails extends PureComponent {
 
+  music = new Audio(drums)
+  onplay =() => {
+    this.music.play()
+  }
+  onPause = () => {
+    this.music.pause()
+  }
 
   makeMove = event => {
     const { game, updateGame, userId } = this.props
@@ -102,12 +110,13 @@ class GameDetails extends PureComponent {
       if (this.props.game === null) this.props.getGames()
       if (this.props.users === null) this.props.getUsers()
       document.body.addEventListener('keydown', this.makeMove)
-
+      this.onplay()
     }
   }
 
   componentWillUnmount() {
     document.body.removeEventListener('keydown', this.makeMove)
+    this.onPause()
   }
 
   joinGame = () => this.props.joinGame(this.props.game.id)
