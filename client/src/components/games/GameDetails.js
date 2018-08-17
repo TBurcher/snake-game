@@ -151,7 +151,10 @@ class GameDetails extends PureComponent {
       <div className='whole-board'>
       {
         game.status !== 'pending' &&
-        <Board board={game.board} coin={game.coin} className='board-object' />
+        <Board className='board' board={game.board} coin={game.coin} 
+        cobraHead={game.players.filter(player => player.symbol === 'x')[0].snake[0]} 
+        snakeHead={game.players.filter(player => player.symbol === 'o')[0].snake[0]} 
+        className='board-object' />
       }
       </div>
     </Paper>)
