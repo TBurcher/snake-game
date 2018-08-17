@@ -133,6 +133,8 @@ class GameDetails extends PureComponent {
       else { return snake }
     }
 
+      if(game.status === "finished" && document.getElementById("Board")  ) {document.getElementById("Board").className = "finished"}
+      // winner
     return (<Paper className="outer-paper">
       <div className="game-header">
         {
@@ -145,17 +147,14 @@ class GameDetails extends PureComponent {
           player && player.symbol === game.turn &&
           <div className="current-turn">It's your turn!</div>
         }
-        {
-          winner &&
-          <div className="game-winner"><img src={winnerIcon()} alt="winner icon" /> Winner</div>
-        }
+
         {
           player &&
           <div className="current-player"><img src={playerIcon()} alt="player icon" /> Player</div>
         }
       </div>
       <hr />
-      <div className='whole-board'>
+      <div id='Board' className='whole-board'>
         {
           game.status !== 'pending' &&
           <Board board={game.board} coin={game.coin}
