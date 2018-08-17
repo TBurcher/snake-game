@@ -14,7 +14,7 @@ import './GameDetails.css'
 class GameDetails extends PureComponent {
 
   music = new Audio(drums)
-  onplay =() => {
+  onplay = () => {
     this.music.play()
   }
   onPause = () => {
@@ -124,6 +124,10 @@ class GameDetails extends PureComponent {
       if (player.symbol === 'x') { return cobra }
       else { return snake }
     }
+    const otherIcon = () => {
+      if (player.symbol !== 'x') { return cobra }
+      else { return snake }
+    }
 
     const winner = game.players
       .filter(p => p.symbol === game.winner)
@@ -133,8 +137,8 @@ class GameDetails extends PureComponent {
       else { return snake }
     }
 
-      if(game.status === "finished" && document.getElementById("Board")  ) {document.getElementById("Board").className = "finished"}
-      // winner
+    if (game.status === "finished" && document.getElementById("Board")) { document.getElementById("Board").className = "finished" }
+
     return (<Paper className="outer-paper">
       <div className="game-header">
         {
@@ -143,27 +147,25 @@ class GameDetails extends PureComponent {
           <button onClick={this.joinGame}>Join Game</button>
         }
         {
+          winner &&
+          <div className="game-winner"><img src={winnerIcon()} alt="winner icon" /></div>
+        }
+        {
+          player &&
+          <div className="current-player"><img src={playerIcon()} alt="player icon" />{Object.values(users).filter(u => u.id === player.userId)[0].username}</div>
+        }
+        {
+          game.players.length > 1 &&
+          <div className="other-player"><img src={otherIcon()} alt="player icon" />{Object.values(users).filter(u => u.id !== player.userId)[0].username}</div>
+        }
+
+      </div>
+      <div id='Board' className='whole-board'>
+        {
           game.status === 'started' &&
           player && player.symbol === game.turn &&
           <div className="current-turn">It's your turn!</div>
         }
-
-                {
-          winner &&
-          <div className="game-winner"><img src={winnerIcon()} alt="winner icon" /> Winner</div>
-        }
-        {
-          player &&
-          <div className="current-player"><img src={playerIcon()} alt="player icon" /> Player</div>
-        }
-
-        {
-          player &&
-          <div className="current-player"><img src={playerIcon()} alt="player icon" /> Player</div>
-        }
-      </div>
-      <hr />
-      <div id='Board' className='whole-board'>
         {
           game.status !== 'pending' &&
           <Board board={game.board} coin={game.coin}
