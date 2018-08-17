@@ -7,9 +7,28 @@
 }
 
 .game-header {
-  display: flex;
+  display: inline;
   justify-content: space-around;
 }
+
+.game-winner{
+  width: 10%;
+  display: inline-block;
+  position: relative;
+  right: 40%;
+}
+
+.current-player{
+  width: 10%;
+  display: inline-block;
+  position: relative;
+  left: 40%;
+}
+
+div{
+  text-align: center;
+}
+
 
 .board {
   display: flex;
