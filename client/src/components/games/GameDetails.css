@@ -4,11 +4,15 @@
   padding: 20px;
   width: 60%;
 }
+
+.game-header {
+  display: flex;
+  justify-content: space-around;
+}
+
 .board {
   display: flex;
   justify-content: center;
-
-
 }
 
 .whole-board{

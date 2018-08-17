@@ -6,6 +6,8 @@ import { getUsers } from '../../actions/users'
 import { userId } from '../../jwt'
 import Paper from 'material-ui/Paper'
 import Board from './Board'
+import cobra from '../icons/cobra.svg'
+import snake from '../icons/snake.svg'
 import './GameDetails.css'
 
 class GameDetails extends PureComponent {
@@ -113,49 +115,54 @@ class GameDetails extends PureComponent {
   render() {
 
     const { game, users, authenticated, userId } = this.props
-    if (!authenticated) return (
-      <Redirect to="/login" />
-    )
-
+    if (!authenticated) return <Redirect to="/login" />
     if (game === null || users === null) return 'Loading...'
     if (!game) return 'Not found'
 
     const player = game.players.find(p => p.userId === userId)
+    const playerIcon = () => {
+      if (player.symbol === 'x') { return cobra }
+      else { return snake }
+    }
 
     const winner = game.players
       .filter(p => p.symbol === game.winner)
       .map(p => p.userId)[0]
+    const winnerIcon = () => {
+      if (game.winner === 'x') { return cobra }
+      else { return snake }
+    }
 
     return (<Paper className="outer-paper">
-      <h2>Game #{game.id}</h2>
-      <p>Status: {game.status}</p>
-      {
-        game.status === 'started' &&
-        player && player.symbol === game.turn &&
-        <div>It's your turn!</div>
-      }
-      {
-        player &&
-        <div>You are {player.symbol}</div>
-      }
-      {
-        game.status === 'pending' &&
-        game.players.map(p => p.userId).indexOf(userId) === -1 &&
-        <button onClick={this.joinGame}>Join Game</button>
-      }
-      {
-        winner &&
-        <p>{game.winner} won the game</p>
-      }
+      <div className="game-header">
+        {
+          game.status === 'pending' &&
+          game.players.map(p => p.userId).indexOf(userId) === -1 &&
+          <button onClick={this.joinGame}>Join Game</button>
+        }
+        {
+          game.status === 'started' &&
+          player && player.symbol === game.turn &&
+          <div className="current-turn">It's your turn!</div>
+        }
+        {
+          winner &&
+          <div className="game-winner"><img src={winnerIcon()} alt="winner icon" /> Winner</div>
+        }
+        {
+          player &&
+          <div className="current-player"><img src={playerIcon()} alt="player icon" /> Player</div>
+        }
+      </div>
       <hr />
       <div className='whole-board'>
-      {
-        game.status !== 'pending' &&
-        <Board board={game.board} coin={game.coin} 
-        cobraHead={game.players.filter(player => player.symbol === 'x')[0].snake[0]} 
-        snakeHead={game.players.filter(player => player.symbol === 'o')[0].snake[0]} 
-        className='board-object' />
-      }
+        {
+          game.status !== 'pending' &&
+          <Board board={game.board} coin={game.coin}
+            cobraHead={game.players.filter(player => player.symbol === 'x')[0].snake[0]}
+            snakeHead={game.players.filter(player => player.symbol === 'o')[0].snake[0]}
+            className='board-object' />
+        }
       </div>
     </Paper>)
   }
