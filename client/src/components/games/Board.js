@@ -16,18 +16,32 @@ const renderCel = (rowIndex, cellIndex, symbol, hasTurn) => {
 }
 
 export default ({ board, coin, cobraHead, snakeHead }) => board.map((cells, rowIndex) =>
-  <div key={rowIndex} className='board' style={{backgroundColor: "green"}}>
+  <div key={rowIndex} className='board'>
     {cells.map((symbol, cellIndex) => {
       if (rowIndex === coin[0] && cellIndex === coin[1]) {
         return renderCel(rowIndex, cellIndex, <img src={mouse} alt="mouse" />, false)
-      }
-      if (rowIndex === cobraHead[0] && cellIndex === cobraHead[1]) {
+      } else if (rowIndex === cobraHead[0] && cellIndex === cobraHead[1]) {
         return renderCel(rowIndex, cellIndex, <img src={cobra} alt="cobra" />, false)
-      }
-      if (rowIndex === snakeHead[0] && cellIndex === snakeHead[1]) {
+      } else if (rowIndex === snakeHead[0] && cellIndex === snakeHead[1]) {
         return renderCel(rowIndex, cellIndex, <img src={snake} alt="snake" />, false)
       }
-      else { return renderCel(rowIndex, cellIndex, symbol, false) }
+      else if (symbol === 'x') {
+        return renderCel(rowIndex, cellIndex,
+          <svg height="50" width="50">
+            <circle cx="25" cy="25" r="20" fill="#ffd335" />
+          </svg>
+          , false)
+      }
+      else if (symbol === 'o') {
+        return renderCel(rowIndex, cellIndex,
+          <svg height="50" width="50">
+            <circle cx="25" cy="25" r="20" fill="#364963" />
+          </svg>
+          , false)
+      }
+      else {
+        return renderCel(rowIndex, cellIndex, symbol, false)
+      }
     })}
   </div>
 )

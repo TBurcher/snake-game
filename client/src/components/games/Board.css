@@ -1,5 +1,15 @@
 .board-tile {
-  margin: 5px;
-  height: 80px;
-  width: 80px;
+  height: 8%;
+  width: 8%;
+  background-color: transparent;
+  border:0px;
+}
+
+svg{
+ position: relative;
+ filter: drop-shadow( -5px -5px 5px rgba(0, 0, 0, 0.68) );
+}
+
+img{
+  filter: drop-shadow( -5px -5px 5px rgba(0, 0, 0, 0.68) );
 }

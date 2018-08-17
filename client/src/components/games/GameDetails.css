@@ -7,4 +7,20 @@
 .board {
   display: flex;
   justify-content: center;
+
+
 }
+
+.whole-board{
+  background-color: #86eba634;
+  background-image: url('../icons/path.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center; 
+  background-blend-mode: luminosity;
+}
+
+body{
+  background-color: #d1caaa
+}
+
