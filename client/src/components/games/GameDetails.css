@@ -1,21 +1,20 @@
 .outer-paper {
-  margin-top: 20px;
-  margin: auto;
-  padding: 20px;
+  margin-top: 5%;
+  padding: 2%;
   width: 60%;
   background-color: #c4c7c8;
 }
 
 .game-header {
-  display: inline;
-  justify-content: space-around;
+  display: flex;
 }
 
 .game-winner{
-  width: 50%;
+  width: 40%;
   display: inline-block;
   position: absolute;
   text-align: center;
+  left: 30%;
 }
 
 .current-player{
@@ -63,6 +62,17 @@
   padding: 15% 0;
 }
 
+.finished{
+  background-color: #86eba634;
+  background-image: url('../icons/path.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center; 
+  background-blend-mode: luminosity;
+  padding: 15% 0;
+  opacity: 0.5;
+}
+
 body{
   background-color: #95AB97
   
@@ -70,3 +80,10 @@ body{
   
 }
 
+.current-turn{
+position: absolute;
+margin-left: 47%;
+margin-right: 47%;
+left: 0;
+right: 0;
+}

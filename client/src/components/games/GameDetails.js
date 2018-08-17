@@ -14,7 +14,7 @@ import './GameDetails.css'
 class GameDetails extends PureComponent {
 
   music = new Audio(drums)
-  onplay =() => {
+  onplay = () => {
     this.music.play()
   }
   onPause = () => {
@@ -129,12 +129,26 @@ class GameDetails extends PureComponent {
       else { return snake }
     }
 
+    const winner = game.players
+      .filter(p => p.symbol === game.winner)
+      .map(p => p.userId)[0]
+    const winnerIcon = () => {
+      if (game.winner === 'x') { return cobra }
+      else { return snake }
+    }
+
+    if (game.status === "finished" && document.getElementById("Board")) { document.getElementById("Board").className = "finished" }
+
     return (<Paper className="outer-paper">
       <div className="game-header">
         {
           game.status === 'pending' &&
           game.players.map(p => p.userId).indexOf(userId) === -1 &&
           <button onClick={this.joinGame}>Join Game</button>
+        }
+        {
+          winner &&
+          <div className="game-winner"><img src={winnerIcon()} alt="winner icon" /></div>
         }
         {
           player &&
@@ -144,8 +158,9 @@ class GameDetails extends PureComponent {
           game.players.length > 1 &&
           <div className="other-player"><img src={otherIcon()} alt="player icon" />{Object.values(users).filter(u => u.id !== player.userId)[0].username}</div>
         }
+
       </div>
-      <div className='whole-board'>
+      <div id='Board' className='whole-board'>
         {
           game.status === 'started' &&
           player && player.symbol === game.turn &&
