@@ -19,7 +19,6 @@ export default class UserController {
       type: 'ADD_USER',
       payload: entity
     })
-
     return user
   }
 
