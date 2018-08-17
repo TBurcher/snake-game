@@ -12,12 +12,10 @@
 }
 
 .game-winner{
-  width: 10%;
+  width: 50%;
   display: inline-block;
   position: absolute;
-  left: 5%;
   text-align: center;
-  margin: 2%;
 }
 
 .current-player{
@@ -27,9 +25,28 @@
   right: 5%;
   text-align: center;
   margin: 2%;
+  color: #ebebeb;
 }
 
+.other-player {
+  width: 10%;
+  display: inline-block;
+  position: absolute;
+  left: 5%;
+  text-align: center;
+  margin: 2%;
+  color: #ebebeb;
+}
 
+.current-turn {
+  display: inline-block;
+  position: absolute;
+  top: 18%;
+  left: 45%;
+  text-align: center;
+  margin: 2%;
+  color: #ebebeb;
+}
 
 .board {
   display: flex;
@@ -47,6 +64,9 @@
 }
 
 body{
-  background-color: #d1caaa
+  background-color: #95AB97
+  
+  
+  
 }
 
