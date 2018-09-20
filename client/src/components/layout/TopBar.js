@@ -38,6 +38,10 @@ const TopBar = (props) => {
           /games$/.test(location.pathname) &&
           <Button color="inherit" onClick={() => history.push('/logout')}>Log out</Button>
         }
+        {
+          /leaders$/.test(location.pathname) &&
+          <Button color="inherit" onClick={() => history.push('/logout')}>Log out</Button>
+        }
       </Toolbar>
     </AppBar>
   )
