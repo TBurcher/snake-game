@@ -30,7 +30,7 @@ export default class GameController {
       game: entity,
       user,
       symbol: 'x',
-      snake: [[1, 1]]
+      snake: [[1, 1]],
     }).save()
 
     const game = await Game.findOneById(entity.id)
@@ -127,7 +127,7 @@ export default class GameController {
     return Game.findOneById(id)
   }
 
-  // @Authorized()
+  @Authorized()
   @Get('/games')
   getGames() {
     return Game.find()

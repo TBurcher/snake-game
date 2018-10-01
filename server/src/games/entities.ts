@@ -1,5 +1,6 @@
-import { BaseEntity, PrimaryGeneratedColumn, Column, Entity, Index, OneToMany, ManyToOne } from 'typeorm'
+import { BaseEntity, PrimaryGeneratedColumn, Column, Entity, Index, OneToMany, ManyToOne, OneToOne } from 'typeorm'
 import {User} from '../users/entity'
+import { Highscore } from '../scores/entity';
 
 export type Symbol = 'x' | 'o' | '$'
 export type Row = [ Symbol | null, Symbol | null, Symbol | null, Symbol | null, Symbol | null ]
@@ -39,6 +40,10 @@ export class Game extends BaseEntity {
 
   @OneToMany(_ => Player, player => player.game, {eager:true})
   players: Player[]
+
+  @OneToOne(_=>Highscore, highscore => highscore.game)
+  highscore: Highscore
+
 }
 
 
@@ -56,11 +61,14 @@ export class Player extends BaseEntity {
   game: Game
 
   @Column()
-  IdOfTheUser: number
+  userId: number
 
   @Column('char', {length: 1})
   symbol: Symbol
 
   @Column('json', {default: emptySnake})
   snake: Snake
+
+  @Column('integer', {default: 0})
+  score: number
 }
