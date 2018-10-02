@@ -28,7 +28,6 @@ export default class ScoreController {
     if (smallestHighscore.score > scoreToInsert){
       return currentHighscores
     }
-    console.log(smallestHighscore)
     await Highscore.removeById(smallestHighscore.id)
 
   }
