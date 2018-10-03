@@ -5,7 +5,10 @@ export default class SignupForm extends PureComponent {
 
 	handleSubmit = (e) => {
 		e.preventDefault()
-		this.props.onSubmit(this.state)
+		if (this.state.username) {
+      this.props.checkUsername(this.state.username)
+			this.props.onSubmit(this.state)
+		}
 	}
 
 	handleChange = (event) => {

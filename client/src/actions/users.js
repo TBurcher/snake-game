@@ -11,6 +11,7 @@ export const USER_LOGIN_FAILED = 'USER_LOGIN_FAILED'
 
 export const USER_LOGOUT = 'USER_LOGOUT'
 
+export const EMAIL_TAKEN = 'EMAIL_TAKEN'
 export const USER_SIGNUP_SUCCESS = 'USER_SIGNUP_SUCCESS'
 export const USER_SIGNUP_FAILED = 'USER_SIGNUP_FAILED'
 
@@ -43,34 +44,54 @@ const updateUsers = (users) => ({
 })
 
 export const login = (username, password) => (dispatch) =>
-	request
-		.post(`${baseUrl}/logins`)
-    .send({username, password})
+  request
+    .post(`${baseUrl}/logins`)
+    .send({ username, password })
     .then(result => dispatch(userLoginSuccess(result.body)))
     .catch(err => {
-    	if (err.status === 400) {
-    		dispatch(userLoginFailed(err.response.body.message))
-    	}
-    	else {
-    		console.error(err)
-    	}
+      if (err.status === 400) {
+        dispatch(userLoginFailed(err.response.body.message))
+      }
+      else {
+        console.error(err)
+      }
     })
 
+export const checkEmail = (username) => (dispatch) => {
+  request
+    .post(`${baseUrl}/checkusername`)
+    .send({ username })
+    .then(result => {
+      console.log(result)
+      if (result.body) {
+        dispatch(emailTaken())
+      }
+      // if (!result.body) {
+      //   dispatch(newUserEmail({ username }))
+      // }
+    })
+}
+
+export const emailTaken = () => ({
+  type: EMAIL_TAKEN,
+  payload: 'Apologies! That username is already taken'
+})
+
 export const signup = (username, password) => (dispatch) =>
-	request
-		.post(`${baseUrl}/users`)
-		.send({ username, password })
-		.then(_=> {
-			dispatch(userSignupSuccess())
-		})
-		.catch(err => {
-			if (err.status === 400) {
-				dispatch(userSignupFailed(err.response.body.message))
-			}
-			else {
-				console.error(err)
-			}
-		})
+  request
+    .post(`${baseUrl}/users`)
+    .send({ username, password })
+    .then(_ => {
+      dispatch(userSignupSuccess())
+    })
+    .catch(err => {
+      if (err.status === 400) {
+        dispatch(userSignupFailed(err.response.body.message))
+      }
+      else {
+        console.error(err)
+      }
+    })
 
 export const getUsers = () => (dispatch, getState) => {
   const state = getState()
