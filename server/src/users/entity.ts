@@ -1,11 +1,14 @@
 import { BaseEntity, Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm'
 import { Exclude } from 'class-transformer';
-import { IsString, MinLength,  } from 'class-validator';
+import { IsString, MinLength, } from 'class-validator';
 import * as bcrypt from 'bcrypt'
 import { Player } from '../games/entities';
+import { Highscore } from '../scores/entity'
+
+
 
 @Entity()
-export default class User extends BaseEntity {
+export class User extends BaseEntity {
 
   @PrimaryGeneratedColumn()
   id?: number
@@ -30,6 +33,12 @@ export default class User extends BaseEntity {
     return bcrypt.compare(rawPassword, this.password)
   }
 
-  @OneToMany(_ => Player, player => player.user) 
+  @OneToMany(_ => Player, player => player.user)
   players: Player[]
+
+  @OneToMany(_ => Highscore, highscore => highscore.user)
+  highscores: Highscore[]
+
 }
+
+

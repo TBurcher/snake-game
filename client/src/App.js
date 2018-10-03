@@ -6,7 +6,7 @@ import GamesList from './components/games/GamesList'
 import GameDetails from './components/games/GameDetails'
 import LogoutPage from './components/logout/LogoutPage'
 import TopBar from './components/layout/TopBar'
-// import LeaderBoard from './components/leaderBoard/LeaderBoard'
+import LeaderBoard from './components/leaderBoard/LeaderBoard'
 
 class App extends Component {
   render() {
@@ -21,7 +21,7 @@ class App extends Component {
             <Route exact path="/logout" component={LogoutPage} />
             <Route exact path="/signup" component={SignupPage} />
             <Route exact path="/games" component={GamesList} />
-            {/* <Route exact path="/leaders" component={LeaderBoard} /> */}
+            <Route exact path="/leaders" component={LeaderBoard} />
             <Route exact path="/games/:id" component={GameDetails} />
             <Route exact path="/" render={ () => <Redirect to="/games" /> } />
           </main>

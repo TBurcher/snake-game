@@ -1,5 +1,5 @@
 import { JsonController, Authorized, CurrentUser, Post, Param, BadRequestError, HttpCode, NotFoundError, ForbiddenError, Get, Body, Patch } from 'routing-controllers'
-import User from '../users/entity'
+import {User} from '../users/entity'
 import { Game, Player, Board, Snake, Location } from './entities'
 import { IsBoard, isValidTransition, finished, newCoin, calculateWinner } from './logic'
 import { Validate } from 'class-validator'
@@ -30,7 +30,7 @@ export default class GameController {
       game: entity,
       user,
       symbol: 'x',
-      snake: [[1, 1]]
+      snake: [[1, 1]],
     }).save()
 
     const game = await Game.findOneById(entity.id)
