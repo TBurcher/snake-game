@@ -57,15 +57,21 @@ export const login = (username, password) => (dispatch) =>
       }
     })
 
-export const checkUsername = (username) => (dispatch) => {
+export const checkUsername = (username, password) => (dispatch) => {
   request
     .post(`${baseUrl}/checkusername`)
     .send({ username })
-    .then(result => {
-      return result.body
-      // if (!result.body) {
-      //   dispatch(newUserEmail({ username }))
-      // }
+    .then(result => { 
+      if (!result.body) dispatch(signup(username, password))
+      else dispatch(usernameTaken())
+    })
+    .catch(err => {
+      if (err.status === 400) {
+        dispatch(userSignupFailed(err.response.body.message))
+      }
+      else {
+        console.error(err)
+      }
     })
 }
 
@@ -74,7 +80,7 @@ export const usernameTaken = () => ({
   payload: 'Apologies! That username is already taken'
 })
 
-export const signup = (username, password) => (dispatch) =>
+const signup = (username, password) => (dispatch) =>
   request
     .post(`${baseUrl}/users`)
     .send({ username, password })
