@@ -6,7 +6,7 @@ import GamesList from './components/games/GamesList'
 import GameDetails from './components/games/GameDetails'
 import LogoutPage from './components/logout/LogoutPage'
 import TopBar from './components/layout/TopBar'
-import LeaderBoard from './components/leaderBoard/LeaderBoard'
+// import LeaderBoard from './components/leaderBoard/LeaderBoard'
 
 class App extends Component {
   render() {

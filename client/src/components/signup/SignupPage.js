@@ -1,11 +1,14 @@
 import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
-import { signup, checkEmail } from '../../actions/users'
+import { signup, checkUsername } from '../../actions/users'
 import SignupForm from './SignupForm'
 import { Redirect } from 'react-router-dom'
 
 class SignupPage extends PureComponent {
 	handleSubmit = (data) => {
+		const check = this.props.checkUsername(data.username)
+		if (!check)
+		console.log(check)
 		this.props.postSignup(data.username, data.password)
 	}
 
@@ -18,7 +21,7 @@ class SignupPage extends PureComponent {
 			<div>
 				<h1>Sign up</h1>
 
-				<SignupForm onSubmit={this.handleSubmit} checkUsername={this.props.checkEmail}/>
+				<SignupForm onSubmit={this.handleSubmit}/>
 
 				<p style={{color:'red'}}>{ this.props.signup.error }</p>
 			</div>
@@ -32,4 +35,4 @@ const mapStateToProps = function (state) {
 	}
 }
 
-export default connect(mapStateToProps, {postSignup: signup, checkEmail})(SignupPage)
+export default connect(mapStateToProps, {postSignup: signup, checkUsername})(SignupPage)

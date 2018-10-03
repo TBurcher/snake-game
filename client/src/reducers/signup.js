@@ -1,4 +1,4 @@
-import { USER_SIGNUP_SUCCESS, USER_SIGNUP_FAILED, EMAIL_TAKEN } from '../actions/users'
+import { USER_SIGNUP_SUCCESS, USER_SIGNUP_FAILED, USERNAME_TAKEN } from '../actions/users'
 
 export default function (state = {}, { type, payload }) {
   switch (type) {
@@ -12,7 +12,7 @@ export default function (state = {}, { type, payload }) {
         error: payload
       }
 
-    case EMAIL_TAKEN:
+    case USERNAME_TAKEN:
       return {
         emailTaken: payload
       }

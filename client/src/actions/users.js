@@ -11,7 +11,7 @@ export const USER_LOGIN_FAILED = 'USER_LOGIN_FAILED'
 
 export const USER_LOGOUT = 'USER_LOGOUT'
 
-export const EMAIL_TAKEN = 'EMAIL_TAKEN'
+export const USERNAME_TAKEN = 'USERNAME_TAKEN'
 export const USER_SIGNUP_SUCCESS = 'USER_SIGNUP_SUCCESS'
 export const USER_SIGNUP_FAILED = 'USER_SIGNUP_FAILED'
 
@@ -57,23 +57,20 @@ export const login = (username, password) => (dispatch) =>
       }
     })
 
-export const checkEmail = (username) => (dispatch) => {
+export const checkUsername = (username) => (dispatch) => {
   request
     .post(`${baseUrl}/checkusername`)
     .send({ username })
     .then(result => {
-      console.log(result)
-      if (result.body) {
-        dispatch(emailTaken())
-      }
+      return result.body
       // if (!result.body) {
       //   dispatch(newUserEmail({ username }))
       // }
     })
 }
 
-export const emailTaken = () => ({
-  type: EMAIL_TAKEN,
+export const usernameTaken = () => ({
+  type: USERNAME_TAKEN,
   payload: 'Apologies! That username is already taken'
 })
 

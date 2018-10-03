@@ -22,6 +22,13 @@ export default class UserController {
     return user
   }
 
+  @Post(`/checkusername`)
+  async checkUsername(@Body() { username }) {
+    const checkUser = await User.findOne({ where: { username: username } })
+    if (checkUser) return true
+    if (!checkUser) return false
+  }
+
   @Authorized()
   @Get('/users/:id([0-9]+)')
   getUser(
