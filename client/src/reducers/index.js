@@ -3,6 +3,7 @@ import users from './users'
 import login from './login'
 import currentUser from './currentUser'
 import signup from './signup'
+import leaders from './leaders'
 
 export default {
   signup,
@@ -10,4 +11,5 @@ export default {
   currentUser,
   users,
   games,
+  leaders,
 }
