@@ -45,7 +45,7 @@ export default class SignupForm extends PureComponent {
   					this.state.password &&
   					this.state.confirmPassword &&
   					this.state.password !== this.state.confirmPassword &&
-  					<p style={{color:'red'}}>The passwords do not match!</p>
+  					<span style={{color:'red'}}>The passwords do not match!</span>
   				}
 
   				<button type="submit">Sign up</button>
