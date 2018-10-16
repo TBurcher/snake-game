@@ -15,4 +15,7 @@ export class Highscore extends BaseEntity {
 
   @Column()
   score: number
+
+  @Column()
+  moves: number
 }
