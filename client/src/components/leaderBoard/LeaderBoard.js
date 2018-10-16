@@ -3,10 +3,13 @@ import { connect } from 'react-redux'
 import Button from 'material-ui/Button'
 import Paper from 'material-ui/Paper'
 import { getLeaders } from '../../actions/leaders'
-import Card, { CardContent } from 'material-ui/Card'
-import Typography from 'material-ui/Typography'
 import { Redirect } from 'react-router-dom'
-
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
+import { withStyles } from '@material-ui/core/styles';
 
 class LeaderBoard extends PureComponent {
   componentWillMount() {
@@ -14,13 +17,28 @@ class LeaderBoard extends PureComponent {
   }
 
   renderLeaders = (leaders) => {
-    return leaders.map(leader => (<Card key={leader.id} className="leader-card">
-      <CardContent>
-        <Typography color="textSecondary">
-          Max score: {leader.score}
-        </Typography>
-      </CardContent>
-    </Card>)
+    return (<Table className={this.props.classes.table}>
+          <TableHead>
+            <TableRow>
+              <TableCell>Name</TableCell>
+              <TableCell numeric>Maximum length</TableCell>
+              <TableCell numeric>Number of moves</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {leaders.map(leader => {
+              return (
+                <TableRow key={leader.id}>
+                  <TableCell component="th" scope="leader">
+                    Name of the user
+                  </TableCell>
+                  <TableCell numeric>{leader.score}</TableCell>
+                  <TableCell numeric>number of moves</TableCell>
+                </TableRow>
+              );
+            })}
+          </TableBody>
+        </Table>
     )
   }
 
@@ -52,4 +70,4 @@ const mapStateToProps = state => ({
   leaders: state.leaders,
 })
 
-export default connect(mapStateToProps, { getLeaders })(LeaderBoard)
+export default connect(mapStateToProps, { getLeaders })(withStyles()(LeaderBoard))

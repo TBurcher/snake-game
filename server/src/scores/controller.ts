@@ -1,4 +1,4 @@
-import { JsonController, Get, Post, BadRequestError, Authorized } from "routing-controllers";
+import { JsonController, Get, Post, Authorized } from "routing-controllers";
 import { Highscore } from "./entity";
 
 @JsonController()
