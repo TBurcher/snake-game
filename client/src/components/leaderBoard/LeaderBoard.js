@@ -18,27 +18,27 @@ class LeaderBoard extends PureComponent {
 
   renderLeaders = (leaders) => {
     return (<Table className={this.props.classes.table}>
-          <TableHead>
-            <TableRow>
-              <TableCell>Name</TableCell>
-              <TableCell numeric>Maximum length</TableCell>
-              <TableCell numeric>Number of moves</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {leaders.map(leader => {
-              return (
-                <TableRow key={leader.id}>
-                  <TableCell component="th" scope="leader">
-                    Name of the user
+      <TableHead>
+        <TableRow>
+          <TableCell>Name</TableCell>
+          <TableCell numeric>Maximum length</TableCell>
+          <TableCell numeric>Number of moves</TableCell>
+        </TableRow>
+      </TableHead>
+      <TableBody>
+        {leaders.map(leader => {
+          return (
+            <TableRow key={leader.id}>
+              <TableCell component="th" scope="leader">
+                {leader.user.username}
                   </TableCell>
-                  <TableCell numeric>{leader.score}</TableCell>
-                  <TableCell numeric>number of moves</TableCell>
-                </TableRow>
-              );
-            })}
-          </TableBody>
-        </Table>
+              <TableCell numeric>{leader.score}</TableCell>
+              <TableCell numeric>{leader.moves}</TableCell>
+            </TableRow>
+          );
+        })}
+      </TableBody>
+    </Table>
     )
   }
 
