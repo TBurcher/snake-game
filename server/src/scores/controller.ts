@@ -1,9 +1,9 @@
-import { JsonController, Get, Post, BadRequestError } from "routing-controllers";
+import { JsonController, Get, Post, BadRequestError, Authorized } from "routing-controllers";
 import { Highscore } from "./entity";
 
 @JsonController()
 export default class ScoreController {
-  // @Authorized()
+  @Authorized()
   @Get('/highscores')
   getHighscores() {
     return Highscore.find()
