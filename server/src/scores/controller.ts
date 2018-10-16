@@ -1,4 +1,4 @@
-import { JsonController, Get, Post, BadRequestError, Authorized } from "routing-controllers";
+import { JsonController, Get, Post, Authorized } from "routing-controllers";
 import { Highscore } from "./entity";
 
 @JsonController()
@@ -16,6 +16,7 @@ export default class ScoreController {
   ) {
     const currentHighscores = await Highscore.find()
     let scoreToInsert = 11
+    let movesToInsert = 10
     if (currentHighscores.length >= 10){
     const smallestHighscore = currentHighscores.reduce((smallHighcore, highscore) => {
       if(smallHighcore.score > highscore.score){
@@ -34,6 +35,7 @@ export default class ScoreController {
 
     await Highscore.create({
       score: scoreToInsert,
+      moves: movesToInsert
     }).save()
 
     const newHighscores = await Highscore.find()

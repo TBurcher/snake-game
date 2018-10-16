@@ -1,21 +1,19 @@
-import { BaseEntity, PrimaryGeneratedColumn, Column, Entity, Index, OneToMany, ManyToOne, OneToOne } from 'typeorm'
-import {User} from '../users/entity'
-import { Highscore } from '../scores/entity';
-
+import { BaseEntity, PrimaryGeneratedColumn, Column, Entity, Index, OneToMany, ManyToOne } from 'typeorm'
+import { User } from '../users/entity'
 export type Symbol = 'x' | 'o' | '$'
-export type Row = [ Symbol | null, Symbol | null, Symbol | null, Symbol | null, Symbol | null ]
-export type Board = [ Row, Row, Row, Row, Row ]
-export type Location = [ number, number ] | [ null, null ]
+export type Row = [Symbol | null, Symbol | null, Symbol | null, Symbol | null, Symbol | null]
+export type Board = [Row, Row, Row, Row, Row]
+export type Location = [number, number] | [null, null]
 export type Snake = Location[]
 
 type Status = 'pending' | 'started' | 'finished'
 
-const emptySnake: Snake = [ [null, null] ]
+const emptySnake: Snake = [[null, null]]
 const emptyRow: Row = [null, null, null, null, null]
 const coinRow: Row = [null, null, '$', null, null]
 const player1Row: Row = [null, 'x', null, null, null]
 const player2Row: Row = [null, null, null, 'o', null]
-export const defaultBoard: Board = [ emptyRow, player1Row, coinRow, player2Row, emptyRow ]
+export const defaultBoard: Board = [emptyRow, player1Row, coinRow, player2Row, emptyRow]
 
 @Entity()
 export class Game extends BaseEntity {
@@ -23,32 +21,29 @@ export class Game extends BaseEntity {
   @PrimaryGeneratedColumn()
   id?: number
 
-  @Column('json', {default: defaultBoard})
+  @Column('json', { default: defaultBoard })
   board: Board
 
-  @Column('json', {default: [2,2]})
+  @Column('json', { default: [2, 2] })
   coin: Location | null
 
-  @Column('char', {length:1, default: 'x'})
+  @Column('char', { length: 1, default: 'x' })
   turn: Symbol
 
-  @Column('char', {length:1, nullable: true})
+  @Column('char', { length: 1, nullable: true })
   winner: Symbol
 
-  @Column('text', {default: 'pending'})
+  @Column('text', { default: 'pending' })
   status: Status
 
-  @OneToMany(_ => Player, player => player.game, {eager:true})
+  @OneToMany(_ => Player, player => player.game, { eager: true })
   players: Player[]
-
-  @OneToOne(_=>Highscore, highscore => highscore.game)
-  highscore: Highscore
 
 }
 
 
 @Entity()
-@Index(['game', 'user', 'symbol'], {unique:true})
+@Index(['game', 'user', 'symbol'], { unique: true })
 export class Player extends BaseEntity {
 
   @PrimaryGeneratedColumn()
@@ -63,12 +58,12 @@ export class Player extends BaseEntity {
   @Column()
   userId: number
 
-  @Column('char', {length: 1})
+  @Column('char', { length: 1 })
   symbol: Symbol
 
-  @Column('json', {default: emptySnake})
+  @Column('json', { default: emptySnake })
   snake: Snake
 
-  @Column('integer', {default: 0})
+  @Column('integer', { default: 0 })
   score: number
 }

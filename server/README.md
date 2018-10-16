@@ -11,6 +11,7 @@ It has these endpoints:
 * `PATCH /games/:id`: update an existing game
 * `GET /games`: list all games
 * `GET /users`: list all users
+* `GET /highscores`: list the top 10 high scores 
 
 ## Running
 
